@@ -7,7 +7,7 @@ import java.io.File;
 import org.junit.Test;
 
 public class test_cookiesLog {
-	static String PATH = "C:\\Users\\Viabl\\eclipse-workspace\\quantcast-main\\src\\test_cases";
+	static String PATH = "C:\\Users\\Viabl\\git\\testing\\quantcast-main\\quantcast-main\\testing_data";
 
 	/**
 	 * Checks that the cookiesLog works for one date
