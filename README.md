@@ -2,7 +2,7 @@
 
 The file need to be complied using the command "javac most_active_cookie.java" 
 
-The file can be run using the command "java most_active_cookie (csv_path) -d (YYYY-MM-DD)". Note that csv file must be in the same folder as the executable. 
+The file can be run using the command "java most_active_cookie (csv_path) -d (YYYY-MM-DD)". Note that csv file must be in the same folder as the executable or you can give the absolute path of the csv file. 
 
 I used the hashMap library because python have a built in dictionary so I figured I can use a hashMap. (I can build a hashMap from scratch).
 
