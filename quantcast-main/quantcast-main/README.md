@@ -1,2 +1,0 @@
-# quantcast
-quantcast coding assessment
