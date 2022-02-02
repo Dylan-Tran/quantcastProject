@@ -13,10 +13,21 @@ public class CookiesLog {
 	private HashMap<DateTime, CookiesList> cookieHistory = new HashMap<>();
 	
 	/**
-	 * Reads in a file and stores the information in a table.
+	 * Constructor takes in a fileName and populates the data structure with 
+	 * the relative information.
 	 * @param fileName, the fileName of the csv or absolute path of the file
 	 */
 	public CookiesLog(String fileName) throws IOException {
+		this.addInformationFromCSV(fileName);
+	}
+	
+	/**
+	 * Opens the csv and reads in the information, and updates the table with
+	 * cookies
+	 * 
+	 * @param fileName, the fileName of the csv or absolute path of the file
+	 */
+	public void addInformationFromCSV(String fileName) throws IOException{
 		File csvFile = new File(fileName);
 		if (csvFile.isFile()) {
 			BufferedReader reader = new BufferedReader(new FileReader(fileName));
