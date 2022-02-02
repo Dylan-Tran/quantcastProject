@@ -4,12 +4,14 @@ The file need to be complied using the command "javac most_active_cookie.java"
 
 The file can be run using the command "java most_active_cookie (csv_path) -d (YYYY-MM-DD)". Note that csv file must be in the same folder as the executable or you can give the absolute path of the csv file. 
 
-I used the hashMap library because python have a built in dictionary so I figured I can use a hashMap. (I can build a hashMap from scratch).
+I implemented a CookiesLog object which stores information about cookies and dates. The CookiesLog object uses a hashmap* where the key represent the date and the value represents a list of cookies (organized as a linkedList, or CookiesList). The CookiesLog uses the method addInfomrationFromCSV to read a csv file and store the relavent information.
 
-The CookiesLog stores the data of the csv file into a hashmap implemented using seperate chaining (LinkedList). The key for the hashmap represent that the date and the chain contain information about cookies found on those date and their frequency. 
+The CookiesList object is a LinkedList object! The nodes contain information about the cookie's name and frequency.
 
-The dateTime object is used to process timestamps. However, we can also get away without saving information about the time. Since the hashmap implementation inherently stores information about the time (For a given day or chain, the cookies near the front occur the lastest).
+The dateTime object is used to process timestamps. However, we can also get away without saving information about the time. Since the hashmap implementation inherently stores information about the cookie's latest time (For a given day or chain, the cookies near the front occur the lastest).
 
-You can use the CookiesLog's toString() method to see the table representation of the date and corresponding. Note: The printing may not be in order according to date because the keys aren't stored in sorted order. I would have to use a treeSet, but I didn't even know if I was allowed to use a hashSet. 
+You can use the CookiesLog's toString() method to see the table representation of the date and corresponding. Note: The printing may not be in order according to date because the keys aren't stored in sorted order.
 
 If you want to run test_cookiesLog.java, you will need to change the path and download the files.  
+
+*I used the hashmap libary because python has it built in. 
