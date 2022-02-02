@@ -1,8 +1,9 @@
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+package testing;
 
+import assessment.CookiesLog;
+import assessment.dateTime;
+import static org.junit.Assert.assertEquals;
 import java.io.IOException;
-import java.io.File;
 
 import org.junit.Test;
 
