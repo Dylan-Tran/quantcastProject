@@ -6,7 +6,7 @@ import java.io.IOException;
 
 import org.junit.Test;
 
-public class test_cookiesLog {
+public class test_CookiesLog {
 	static String PATH = "C:\\Users\\Viabl\\git\\testing\\quantcast-main\\quantcast-main\\testing_data";
 
 	/**
@@ -15,7 +15,7 @@ public class test_cookiesLog {
 	 */
 	@Test
 	public void test1() throws IOException {
-		CookiesLog x = new CookiesLog(test_cookiesLog.PATH + "\\test_case1.csv");
+		CookiesLog x = new CookiesLog(test_CookiesLog.PATH + "\\test_case1.csv");
 		String answer = x.getMostActiveCookies(new DateTime("2022-01-31"));
 		String correctAnswer = "A";
 		assertEquals(answer, correctAnswer);
@@ -27,7 +27,7 @@ public class test_cookiesLog {
 	 */
 	@Test
 	public void test2() throws IOException {
-		CookiesLog x = new CookiesLog(test_cookiesLog.PATH + "\\test_case2.csv");
+		CookiesLog x = new CookiesLog(test_CookiesLog.PATH + "\\test_case2.csv");
 		String answer = x.getMostActiveCookies(new DateTime("2022-01-31"));
 		String correctAnswer = "A\nB\nC";
 		assertEquals(answer, correctAnswer);
@@ -48,7 +48,7 @@ public class test_cookiesLog {
 	 */
 	@Test
 	public void test3() throws IOException {
-		CookiesLog x = new CookiesLog(test_cookiesLog.PATH + "\\test_case3.csv");
+		CookiesLog x = new CookiesLog(test_CookiesLog.PATH + "\\test_case3.csv");
 		String answer = x.getMostActiveCookies(new DateTime("2022-01-31"));
 		String correctAnswer = "A";	
 		assertEquals(answer, correctAnswer);
@@ -61,7 +61,7 @@ public class test_cookiesLog {
 	 */
 	@Test
 	public void test4() throws IOException {
-		CookiesLog x = new CookiesLog(test_cookiesLog.PATH + "\\test_case4.csv");
+		CookiesLog x = new CookiesLog(test_CookiesLog.PATH + "\\test_case4.csv");
 		String answer = x.getMostActiveCookies(new DateTime("2022-01-31"));
 		String correctAnswer = "A";	
 		assertEquals(answer, correctAnswer);

@@ -7,13 +7,10 @@ import java.io.IOException;
 import java.util.HashMap;
 
 /**
- *  CookiesLog is a data structure that will save cookies based on its timestamp.
+ *  CookiesLog is a data structure that organized cookies based on their date.
  */
 public class CookiesLog {
-	/* cookieHistory a hashMap where the key is the date and its value is a list of nodes that stores
-	 * information about the cookie
-	 */
-	private HashMap<DateTime, Node> cookieHistory = new HashMap<>();
+	private HashMap<DateTime, CookiesList> cookieHistory = new HashMap<>();
 	
 	/**
 	 * Reads in a file and stores the information in a table.
@@ -28,7 +25,9 @@ public class CookiesLog {
 			while( (row = reader.readLine()) != null) {
 				String[] data = row.split(",");
 				String[] timestamp = data[1].split("T");
-				this.insert(new DateTime(timestamp[0].strip(), timestamp[1].strip()), data[0]);
+				String date = timestamp[0].strip();
+				String time = timestamp[1].strip();
+				this.insert(new DateTime(date, time), data[0]);
 			}
 			
 			reader.close();
@@ -44,121 +43,35 @@ public class CookiesLog {
 	 */
 	public void insert(DateTime date, String cookie) {
 		if (!this.cookieHistory.containsKey(date)) {
-			this.cookieHistory.put(date, new Node(cookie));
-			return;
-		}
-
-		/* If the cookie has already been seen update the frequency,
-		 * else add a new node to the linkedList. 
-		 */
-		Node root = this.cookieHistory.get(date);
-		if (root.contains(cookie)) {
-			Node curr = root;
-			while(!curr.getCookie().equals(cookie)) {
-				curr = curr.next;
-			}
-			curr.incrementFrequency();
+			this.cookieHistory.put(date, new CookiesList(cookie));
 		} else {
-			Node last = root;
-			while(last.next != null) {
-				last = last.next;
-			}			
-			last.next = new Node(cookie);
+			CookiesList chain = this.cookieHistory.get(date);;
+			chain.insert(cookie);	
 		}
 	}
 	
 	/**
-	 * Print a list of cookies that showed up the most on a particular day
+	 * Print a list of cookies that showed up the most on a particular day.
 	 */
 	public String getMostActiveCookies(DateTime date) {
 		if (!this.cookieHistory.containsKey(date)) {
 			return "No cookies were found for that day";
+		} else {
+			CookiesList list = this.cookieHistory.get(date);
+			return list.getMostActivesCookies();
 		}
-		
-		int maxFreq = Integer.MIN_VALUE;
-		String listMostActivesCookies = "";
-				
-		Node curr = this.cookieHistory.get(date);
-		while(curr != null) {
-			if (curr.getFrequency() < maxFreq) {
-				curr = curr.next;
-				continue;
-			}
-			
-			if (curr.getFrequency() == maxFreq) {
-				listMostActivesCookies = listMostActivesCookies + "\n" + curr.getCookie(); 
-				curr = curr.next;
-				continue;
-			}
-
-			maxFreq = curr.getFrequency();
-			listMostActivesCookies = curr.getCookie();
-			curr = curr.next;
-		}
-		
-		return listMostActivesCookies;
 	}
 
 	/**
-	 *	Prints the table representation of the cookiesHistory
+	 *	Prints the table representation of the cookiesHistory.
+	 *	Note: the printing is not in order. This can quickly be fixed by having an
+	 *		arrayList of dates and sorting them!
 	 */
 	public String toString() {
 		String str = "";
 		for (DateTime key: this.cookieHistory.keySet()) {
-			str += key.getDate() + ":";
-
-			Node curr = this.cookieHistory.get(key);
-			while (curr != null) {
-				str += " " + curr.toString();
-				curr = curr.next;
-			}			
-			str += "\n";
-		}
-		
+			str += key.getDate() + ":" + this.cookieHistory.get(key).toString() + "\n";
+		}		
 		return str;
-	}
-	
-	/**
-	 * An implementation of a LinkedList object where the node stores the value of the
-	 * cookie and its frequency. 
-	 */
-	private class Node {
-		private String cookieName;
-		private int frequency = 1; 
-		public Node next;
-		
-		public Node(String inputCookieName) {
-			this.cookieName = inputCookieName;
-			this.next = null;
-		}
-		
-		public String getCookie() {
-			return this.cookieName;
-		}
-		
-		public int getFrequency() {
-			return this.frequency;
-		}
-		
-		public void incrementFrequency() {
-			this.frequency++;
-		}
-		
-		/**
-		 * Returns true if the current Node or any of its children represent the input cookie.
-		 * @param cookie, the cookie name
-		 */
-		public boolean contains(String cookie) {
-			Node curr = this;
-			while(curr != null) {
-				if (curr.getCookie().equals(cookie)) return true;
-				curr = curr.next;
-			}
-			return false;
-		}
-		
-		public String toString() {
-			return "[" + this.cookieName + ", " + this.frequency + "]";
-		}
 	}
 }
