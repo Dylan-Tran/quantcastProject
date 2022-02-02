@@ -1,4 +1,5 @@
 package assessment;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -12,7 +13,7 @@ public class CookiesLog {
 	/* cookieHistory a hashMap where the key is the date and its value is a list of nodes that stores
 	 * information about the cookie
 	 */
-	private HashMap<dateTime, Node> cookieHistory = new HashMap<>();
+	private HashMap<DateTime, Node> cookieHistory = new HashMap<>();
 	
 	/**
 	 * Reads in a file and stores the information in a table.
@@ -27,7 +28,7 @@ public class CookiesLog {
 			while( (row = reader.readLine()) != null) {
 				String[] data = row.split(",");
 				String[] timestamp = data[1].split("T");
-				this.insert(new dateTime(timestamp[0].strip(), timestamp[1].strip()), data[0]);
+				this.insert(new DateTime(timestamp[0].strip(), timestamp[1].strip()), data[0]);
 			}
 			
 			reader.close();
@@ -41,7 +42,7 @@ public class CookiesLog {
 	 * @param date, the day of the cookie
 	 * 		  cookie, the name of the cookie
 	 */
-	public void insert(dateTime date, String cookie) {
+	public void insert(DateTime date, String cookie) {
 		if (!this.cookieHistory.containsKey(date)) {
 			this.cookieHistory.put(date, new Node(cookie));
 			return;
@@ -69,7 +70,7 @@ public class CookiesLog {
 	/**
 	 * Print a list of cookies that showed up the most on a particular day
 	 */
-	public String getMostActiveCookies(dateTime date) {
+	public String getMostActiveCookies(DateTime date) {
 		if (!this.cookieHistory.containsKey(date)) {
 			return "No cookies were found for that day";
 		}
@@ -103,7 +104,7 @@ public class CookiesLog {
 	 */
 	public String toString() {
 		String str = "";
-		for (dateTime key: this.cookieHistory.keySet()) {
+		for (DateTime key: this.cookieHistory.keySet()) {
 			str += key.getDate() + ":";
 
 			Node curr = this.cookieHistory.get(key);

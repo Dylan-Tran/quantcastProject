@@ -1,7 +1,8 @@
 package assessment;
+
 import java.util.Arrays;
 
-public class dateTime {
+public class DateTime {
 	private int[] date = new int[3]; // {year, month, day}
 	private int[] time = new int[3]; // {hour, minute, second}
 
@@ -9,7 +10,7 @@ public class dateTime {
 	 * Takes a date and convert it into a dataTime object
 	 *	@param dateInput, year-month-day
 	 */
-	public dateTime(String dateInput) {
+	public DateTime(String dateInput) {
 		String[] dateInputArray = dateInput.split("-");
 		if (dateInput.length() != 10 || dateInputArray.length != 3) {
 			System.out.println("The date was not in the format YYYY-MM-DD");
@@ -25,7 +26,7 @@ public class dateTime {
 	 *	@param dateInput, year-month-day
 	 *			timeInput, HH:MM:SS+XX:XX
 	 */
-	public dateTime(String dateInput, String timeInput) {
+	public DateTime(String dateInput, String timeInput) {
 		this(dateInput);
 		
 		String[] time = timeInput.substring(0, timeInput.indexOf("+")).split(":");
@@ -69,7 +70,7 @@ public class dateTime {
 	 */
 	public boolean equals(Object other) {
 		if (other == this) return true;
-		if (!(other instanceof dateTime)) return false;
+		if (!(other instanceof DateTime)) return false;
 
 		if (this.hashCode() == other.hashCode()) return true;	
 		return false;
