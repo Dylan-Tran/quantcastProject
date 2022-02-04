@@ -8,7 +8,7 @@ I implemented a CookiesLog object which stores information about cookies and dat
 
 The CookiesList object is a LinkedList object! The nodes contain information about the cookie's name and frequency.
 
-The dateTime object is used to process timestamps. However, we can also get away without saving information about the time. Since the hashmap implementation inherently stores information about the cookie's latest time (For a given day or chain, the cookies near the front occur the lastest).
+The Date object is used to process date string. Since the inputs are already in order, the hashmap implementation inherently stores information about the cookie's latest time (For a given day or chain, the cookies near the front occur the lastest).
 
 You can use the CookiesLog's toString() method to see the table representation of the date and corresponding. Note: The printing may not be in order according to date because the keys aren't stored in sorted order.
 
