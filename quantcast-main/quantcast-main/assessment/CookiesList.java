@@ -1,8 +1,8 @@
 package assessment;
 
 /**
- * An implementation of a LinkedList object where the node stores the value of the
- * cookie and its frequency. 
+ * An implementation of a LinkedList object where the node stores the cookie's name
+ * 	and its frequency. 
  */
 public class CookiesList {
 	private CookieNode head;
