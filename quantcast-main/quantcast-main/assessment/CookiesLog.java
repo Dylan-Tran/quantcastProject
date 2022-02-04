@@ -8,9 +8,11 @@ import java.util.HashMap;
 
 /**
  *  CookiesLog is a data structure that organized cookies based on their date.
+ *  	For each date, we keep track of cookies and their frequency that showed
+ *  	up on that date. 
  */
 public class CookiesLog {
-	private HashMap<DateTime, CookiesList> cookieHistory = new HashMap<>();
+	private HashMap<Date, CookiesList> cookieHistory = new HashMap<>();
 	
 	/**
 	 * Constructor takes in a fileName and populates the data structure with 
@@ -22,25 +24,27 @@ public class CookiesLog {
 	}
 	
 	/**
-	 * Opens the csv and reads in the information, and updates the table with
-	 * cookies
-	 * 
-	 * @param fileName, the fileName of the csv or absolute path of the file
+	 * @param fileName, the fileName of the csv or absolute path of the file,
+	 * 					the csv file should be organized as cookiesName,timestamp
+	 * 					where the timestamp is (DATE)T(TIME)
 	 */
 	public void addInformationFromCSV(String fileName) throws IOException{
 		File csvFile = new File(fileName);
 		if (csvFile.isFile()) {
 			BufferedReader reader = new BufferedReader(new FileReader(fileName));
-			// The data should come in the form of cookies,timestamp
 			String row = reader.readLine();
 			while( (row = reader.readLine()) != null) {
 				String[] data = row.split(",");
 				String[] timestamp = data[1].split("T");
-				String date = timestamp[0].strip();
-				String time = timestamp[1].strip();
-				this.insert(new DateTime(date, time), data[0]);
+				
+				String cookieName = data[0].strip();
+				String cookieDate = timestamp[0].strip();
+				String cookieTime = timestamp[1].strip();
+				
+				Date key = new Date(cookieDate);
+	
+				this.insertEntry(key, cookieName);
 			}
-			
 			reader.close();
 		} else {
 			System.out.println("CSV file was not found");
@@ -48,28 +52,45 @@ public class CookiesLog {
 	}
 	
 	/**
+	 * Returns true if the date has already been seen before
+	 */
+	public boolean dateExist(Date date) {
+		return this.cookieHistory.containsKey(date);		
+	}
+	
+	/**
+	 * Searches the cookieHistory for the date and return a CookiesList object
+	 * which contains a list of cookies seen that day
+	 * @param date
+	 */
+	public CookiesList retrieveDate(Date date) {
+		return this.cookieHistory.get(date);
+	}
+	
+	/**
 	 * Inserts a cookie into the cookieHistory according to the date.
 	 * @param date, the day of the cookie
 	 * 		  cookie, the name of the cookie
 	 */
-	public void insert(DateTime date, String cookie) {
-		if (!this.cookieHistory.containsKey(date)) {
-			this.cookieHistory.put(date, new CookiesList(cookie));
+	public void insertEntry(Date date, String cookieName) {
+		if (this.dateExist(date)) {
+			CookiesList dateCookies = this.retrieveDate(date);;
+			dateCookies.insertCookie(cookieName);	
 		} else {
-			CookiesList chain = this.cookieHistory.get(date);;
-			chain.insert(cookie);	
+			this.cookieHistory.put(date, new CookiesList(cookieName));
 		}
 	}
 	
 	/**
 	 * Print a list of cookies that showed up the most on a particular day.
 	 */
-	public String getMostActiveCookies(DateTime date) {
-		if (!this.cookieHistory.containsKey(date)) {
-			return "No cookies were found for that day";
+	public String getMostActiveCookies(Date date) {
+		String ERROR_MSG = "No cookies existed on that day";
+		if (!this.dateExist(date)) {
+			return ERROR_MSG;
 		} else {
-			CookiesList list = this.cookieHistory.get(date);
-			return list.getMostActivesCookies();
+			CookiesList dateCookies = this.retrieveDate(date);
+			return dateCookies.mostActiveCookies();
 		}
 	}
 
@@ -80,8 +101,8 @@ public class CookiesLog {
 	 */
 	public String toString() {
 		String str = "";
-		for (DateTime key: this.cookieHistory.keySet()) {
-			str += key.getDate() + ":" + this.cookieHistory.get(key).toString() + "\n";
+		for (Date date: this.cookieHistory.keySet()) {
+			str += date.toString() + ": " + this.retrieveDate(date).toString() + "\n";
 		}		
 		return str;
 	}

@@ -11,7 +11,7 @@ public class most_active_cookie {
 			String retrive = args[2];
 			
 			CookiesLog log = new CookiesLog(fileName);
-			System.out.println(log.getMostActiveCookies(new DateTime(retrive)));
+			System.out.println(log.getMostActiveCookies(new Date(retrive)));
 		}		
 	}
 }

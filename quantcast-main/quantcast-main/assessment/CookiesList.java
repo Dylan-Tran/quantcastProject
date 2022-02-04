@@ -8,10 +8,9 @@ public class CookiesList {
 	private CookieNode head;
 	private CookieNode tail;
 
-	public CookiesList(String cookie) {
-		CookieNode node = new CookieNode(cookie);
-		this.head = node;
-		this.tail = node;
+	public CookiesList(String cookieName) {
+		this.head = new CookieNode(cookieName);;
+		this.tail = this.head;
 	}
 	
 	public CookieNode getHead() {
@@ -28,13 +27,13 @@ public class CookiesList {
 	}
 
 	/**
-	 * Returns true if the linkedList contains the cookie
+	 * Returns true if the CookiesList contains the cookie
 	 * @param cookie, the cookie name
 	 */
-	public boolean contains(String cookie) {
+	public boolean containsCookie(String cookieName) {
 		CookieNode curr = this.head;
 		while(curr != null) {
-			if (curr.getCookie().equals(cookie)) return true;
+			if (curr.getCookie().equals(cookieName)) return true;
 			curr = curr.next;
 		}
 		return false;
@@ -42,36 +41,35 @@ public class CookiesList {
 	
 	/**
 	 * @return a CookieNode that has the same name as the input string
-	 * @apiNote this method should only be called after checking with contains()
+	 * @apiNote this method should only be called after checking with containsCookie()
 	 */
-	public CookieNode get(String cookie) {
-		if(!this.contains(cookie)) {
+	public CookieNode getCookie(String cookieName) {
+		if(!this.containsCookie(cookieName)) {
 			return null;
 		}
 		
 		CookieNode curr = this.head;
-		while(!curr.getCookie().equals(cookie)) {
+		while(!curr.getCookie().equals(cookieName)) {
 			curr = curr.next;
 		}
 		return curr;		
 	}
 	
-	/** If the cookie has already been seen update the frequency,
-	 * else add a new node to the linkedList. 
+	/** If the cookie is already in the list, update the cookie's node frequency,
+	 * else a new cookie node is added to the end of the list.
 	 */
-	public void insert(String cookie) {
-		if (!this.contains(cookie)) {
-			this.setTail(new CookieNode(cookie));
+	public void insertCookie(String cookieName) {
+		if (this.containsCookie(cookieName)) {
+			this.getCookie(cookieName).incrementFrequency();
 		} else {
-			CookieNode curr = this.get(cookie);
-			curr.incrementFrequency();
+			this.setTail(new CookieNode(cookieName));
 		}
 	}
 	
 	/**
 	 * @return a string of the most active cookies on the chain separated by "\n"
 	 */
-	public String getMostActivesCookies() {
+	public String mostActiveCookies() {
 		CookieNode curr = this.head;
 		int maxFreq = Integer.MIN_VALUE;
 		String listMostActivesCookies = "";
@@ -90,23 +88,24 @@ public class CookiesList {
 	}
 
 	/**
-	 * @return the string representation of the linkedList with the [cookieName, frequency]
+	 * Returns the string representation of the linkedList with the [cookieName, frequency]
 	 */
 	public String toString() {
-		String str = "";
+		CookieNode cookie = this.head;
+		String str = cookie.toString();
+		cookie = cookie.next;
 		
-		CookieNode curr = this.head;
-		while (curr != null) {
-			str += " " + curr.toString();
-			curr = curr.next;
+		while (cookie!= null) {
+			str = str + " " + cookie.toString();
+			cookie = cookie.next;
 		}					
 		return str;
 	}
 
 	/**
-	 * The node class that contains information about the cookie's name and frequency
+	 * The node class that contains information about the a cookie's name and frequency
 	 */
-	public class CookieNode {
+	private class CookieNode {
 		private String cookieName;
 		private int frequency = 1; 
 		private CookieNode next = null;

@@ -11,72 +11,66 @@ public class test_CookiesList {
 	public void test_constructor() {
 		CookiesList x = new CookiesList("A");
 		
-		assertEquals(x.getHead().getCookie(), "A");
-		assertEquals(x.getTail().getCookie(), "A");
-		assertEquals(x.getHead().getFrequency(), 1);
 		assertEquals(x.getHead(), x.getTail());
 	}
 
 	@Test
-	public void test_insert() {
+	public void test_insertCookie() {
 		CookiesList x = new CookiesList("A");
-		x.insert("B");
+		x.insertCookie("B");
 		
-		assertEquals(x.getHead().getCookie(), "A");
-		assertEquals(x.getTail().getCookie(), "B");
-		assertEquals(x.getHead().getFrequency(), 1);
-		assertEquals(x.getTail().getFrequency(), 1);
-		
-		assertEquals(x.get("A"), x.getHead());
-		assertEquals(x.get("B"), x.getTail());				
+		String str = x.toString();
+		String correctString = "[A, 1] [B, 1]";
+		assertNotEquals(x.getHead(), x.getTail());		
+		assertEquals(x.getCookie("A"), x.getHead());
+		assertEquals(x.getCookie("B"), x.getTail());
+		assertEquals(str, correctString);
 	}
 	
 	@Test
-	public void test_insert2() {
+	public void test_insertCookie2() {
 		CookiesList x = new CookiesList("A");
-		x.insert("B");
-		x.insert("A");
-		x.insert("B");
-		x.insert("C");
-		x.insert("A");
-		x.insert("D");		
-		x.insert("D");
-		x.insert("A");		
-		
-		assertEquals(x.getHead().getCookie(), "A");
-		assertEquals(x.getTail().getCookie(), "D");
-		assertEquals(x.get("A").getFrequency(), 4);
-		assertEquals(x.get("B").getFrequency(), 2);
-		assertEquals(x.get("C").getFrequency(), 1);
-		assertEquals(x.get("D").getFrequency(), 2);
+		x.insertCookie("B");
+		x.insertCookie("A");
+		x.insertCookie("B");
+		x.insertCookie("C");
+		x.insertCookie("A");
+		x.insertCookie("D");		
+		x.insertCookie("D");
+		x.insertCookie("A");		
+
+		String str = x.toString();
+		String correctString = "[A, 4] [B, 2] [C, 1] [D, 2]";
+
+		assertNotEquals(x.getHead(), x.getTail());
+		assertEquals(str, correctString);
 	}
 	
 	@Test
 	public void test_contains() {
 		CookiesList x = new CookiesList("A");
-		x.insert("B");
-		x.insert("A");
-		x.insert("B");
-		x.insert("C");
-		x.insert("A");
-		x.insert("D");		
-		x.insert("D");
-		x.insert("A");		
+		x.insertCookie("B");
+		x.insertCookie("A");
+		x.insertCookie("B");
+		x.insertCookie("C");
+		x.insertCookie("A");
+		x.insertCookie("D");		
+		x.insertCookie("D");
+		x.insertCookie("A");		
 		
-		assertTrue(x.contains("A"));
-		assertTrue(x.contains("B"));
-		assertTrue(x.contains("C"));
-		assertTrue(x.contains("D"));
-		
-		assertFalse(x.contains("Z"));
-		assertFalse(x.contains("Q"));
+		assertTrue(x.containsCookie("A"));
+		assertTrue(x.containsCookie("B"));
+		assertTrue(x.containsCookie("C"));
+		assertTrue(x.containsCookie("D"));
+		assertFalse(x.containsCookie("Z"));
+		assertFalse(x.containsCookie("Q"));
 	}
 	
 	@Test
 	public void test_mostActiveCookies() {
 		CookiesList x = new CookiesList("A");
 		
-		String ans = x.getMostActivesCookies();
+		String ans = x.mostActiveCookies();
 		String correctAnswer = "A";
 		assertEquals(ans, correctAnswer);
 	}
@@ -84,16 +78,16 @@ public class test_CookiesList {
 	@Test
 	public void test_mostActiveCookies2() {
 		CookiesList x = new CookiesList("A");
-		x.insert("B");
-		x.insert("A");
-		x.insert("B");
-		x.insert("C");
-		x.insert("A");
-		x.insert("D");		
-		x.insert("D");
-		x.insert("A");
+		x.insertCookie("B");
+		x.insertCookie("A");
+		x.insertCookie("B");
+		x.insertCookie("C");
+		x.insertCookie("A");
+		x.insertCookie("D");		
+		x.insertCookie("D");
+		x.insertCookie("A");
 		
-		String ans = x.getMostActivesCookies();
+		String ans = x.mostActiveCookies();
 		String correctAnswer = "A";
 		assertEquals(ans, correctAnswer);
 	}
@@ -101,19 +95,18 @@ public class test_CookiesList {
 	@Test
 	public void test_mostActiveCookies3() {
 		CookiesList x = new CookiesList("A");
-		x.insert("B");
-		x.insert("A");
-		x.insert("B");
-		x.insert("C");
-		x.insert("A");
-		x.insert("D");		
-		x.insert("D");
-		x.insert("B");
-		x.insert("D");
+		x.insertCookie("B");
+		x.insertCookie("A");
+		x.insertCookie("B");
+		x.insertCookie("C");
+		x.insertCookie("A");
+		x.insertCookie("D");		
+		x.insertCookie("D");
+		x.insertCookie("B");
+		x.insertCookie("D");
 		
-		String ans = x.getMostActivesCookies();
+		String ans = x.mostActiveCookies();
 		String correctAnswer = "A\nB\nD";
-		System.out.println(ans);
 		assertEquals(ans, correctAnswer);
 	}
 }
