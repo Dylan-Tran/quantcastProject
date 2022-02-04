@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 import assessment.Date;
 
-public class test_DateTime {			
+public class test_Date {			
 	@Test
 	public void testConstructor1() {
 		Date x = new Date("0000-00-00");
